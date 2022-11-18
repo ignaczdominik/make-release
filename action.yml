@@ -3,6 +3,11 @@ description: "Generate PDF file with Pandoc"
 runs:
   using: "composite"
   steps:
+    - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: feladatsor
+          path: ./build/feladatsor.pdf
     - name: Get version
       run: grep -Eo '[0-9]\.[0-9]\.[0-9]+' pdf-assets/metadata.yml
       id: version
