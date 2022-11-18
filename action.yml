@@ -1,13 +1,22 @@
-name: "PDF generator"
-description: "Generate PDF file with Pandoc"
+name: "Release PDF"
+description: "Release the previously created PDF"
+inputs:
+  artifact-name: 
+    description: 'How to save the artifact'
+    required: true
+    default: 'Tananyag'
+  pdf-path:
+    description: 'Where the PDF is stored'
+    required: true
+    default: './build/frontend.pdf'
 runs:
   using: "composite"
   steps:
     - name: Archive code coverage results
       uses: actions/upload-artifact@v3
-        with:
-          name: feladatsor
-          path: ./build/feladatsor.pdf
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.pdf-path }}
     - name: Get version
       run: grep -Eo '[0-9]\.[0-9]\.[0-9]+' pdf-assets/metadata.yml
       id: version
@@ -26,7 +35,7 @@ runs:
       uses: softprops/action-gh-release@v0.1.14
       with:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
-        files: ./build/feladatsor.pdf
+        files: ${{ inputs.pdf-path }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   env:
