@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
         with:
           name: feladatsor
           path: ./build/feladatsor.pdf
