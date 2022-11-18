@@ -9,6 +9,8 @@ inputs:
     description: 'Where the PDF is stored'
     required: true
     default: './build/frontend.pdf'
+  github-token:
+    required: true
 runs:
   using: "composite"
   steps:
@@ -37,6 +39,4 @@ runs:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
         files: ${{ inputs.pdf-path }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  env:
-      GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
