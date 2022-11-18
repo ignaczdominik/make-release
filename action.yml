@@ -16,7 +16,7 @@ runs:
   steps:
     - name: Archive code coverage results
       uses: actions/upload-artifact@v3
-      shell: bash
+      
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ inputs.pdf-path }}
@@ -27,19 +27,19 @@ runs:
     - name: Bump version and push tag
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
-      shell: bash
+      
       with:
         github_token: ${{ inputs.github-token }}
         custom_tag: ${{ steps.version.outputs.version }}
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1.11.2
-      shell: bash
+      
       with:
         tag: ${{ steps.tag_version.outputs.new_tag }}
         name: Release ${{ steps.tag_version.outputs.new_tag }}
     - name: Release
       uses: softprops/action-gh-release@v0.1.14
-      shell: bash
+      
       with:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
         files: ${{ inputs.pdf-path }}
