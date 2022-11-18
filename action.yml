@@ -1,0 +1,28 @@
+name: "PDF generator"
+description: "Generate PDF file with Pandoc"
+runs:
+  using: "composite"
+  steps:
+    - name: Get version
+      run: grep -Eo '[0-9]\.[0-9]\.[0-9]+' pdf-assets/metadata.yml
+      id: version
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        custom_tag: ${{ steps.version.outputs.version }}
+    - name: Create a GitHub release
+      uses: ncipollo/release-action@v1.11.2
+      with:
+        tag: ${{ steps.tag_version.outputs.new_tag }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
+    - name: Release
+      uses: softprops/action-gh-release@v0.1.14
+      with:
+        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        files: ./build/feladatsor.pdf
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  env:
+      GITHUB_TOKEN: ${{ github.token }}
