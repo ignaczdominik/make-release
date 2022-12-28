@@ -39,7 +39,7 @@ runs:
       with:
         github_token: ${{ inputs.github-token }}
     - name: Create Artifacts
-      uses: ignaczdominik/pdf-assets
+      uses: ignaczdominik/pdf-assets@v1
       with:
         title: ${{ inputs.title }}
         subtitle: ${{ inputs.subtitle }}
