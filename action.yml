@@ -32,7 +32,7 @@ runs:
   using: "composite"
   steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3.2
     - name: Save "README.md"
       shell: bash
       run: mkdir save && mv README.md save/README.md
@@ -64,12 +64,12 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: ${{ inputs.pdf-path }}
     - name: Create a GitHub release
-      uses: ncipollo/release-action@v1.11.2
+      uses: ncipollo/release-action@v1.12.0
       with:
         tag: ${{ steps.tag_version.outputs.new_tag }}
         name: Release ${{ steps.tag_version.outputs.new_tag }}
     - name: Release
-      uses: softprops/action-gh-release@v0.1.14
+      uses: softprops/action-gh-release@v0.1.15
       with:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
         files: ${{ inputs.pdf-path }}
