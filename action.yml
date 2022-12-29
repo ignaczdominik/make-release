@@ -44,6 +44,9 @@ runs:
       uses: mathieudutour/github-tag-action@v6.1
       with:
         github_token: ${{ inputs.gh_token}}
+    - name: Check files
+      shell: bash
+      run: ls -l .
     - name: Create Artifacts
       uses: ignaczdominik/pdf-assets@v1
       with:
