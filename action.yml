@@ -31,14 +31,20 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get PDF-assets
-      shell: bash
-      run: git clone https://github.com/ignaczdominik/pdf-assets .
-    - name: Get PDF-assets
-      shell: bash
-      run: rm -rf .git
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Save "README.md"
+      shell: bash
+      run: mkdir save && mv README.md save/README.md
+    - name: Get PDF-assets
+      shell: bash
+      run: wget https://github.com/ignaczdominik/pdf-assets/archive/refs/tags/v1.zip
+    - name: Unpack PDF-assets
+      shell: bash
+      run: unzip v1.zip && mv pdf-assets-1/* . && rm -rf pdf-assets-1 && rm README.md
+    - name: Restore "README.md"
+      shell: bash
+      run: mv save/README.md README.md && rm -rf save
     - name: Bump version and push tag
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
