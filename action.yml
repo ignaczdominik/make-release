@@ -34,6 +34,9 @@ runs:
     - name: Get PDF-assets
       shell: bash
       run: git clone https://github.com/ignaczdominik/pdf-assets .
+    - name: Get PDF-assets
+      shell: bash
+      run: rm -rf .git
     - name: Checkout
       uses: actions/checkout@v3
     - name: Bump version and push tag
